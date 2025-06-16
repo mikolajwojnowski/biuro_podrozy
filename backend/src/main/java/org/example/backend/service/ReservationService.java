@@ -121,12 +121,6 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Reservation not found"));
 
-        // Allow admins to cancel any reservation, but users can only cancel their own
-        if (!auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")) &&
-            !reservation.getUser().getEmail().equals(auth.getName())) {
-            throw new AccessDeniedException("You can only cancel your own reservations");
-        }
-
         // Update trip's available spots before deactivating
         Trip trip = reservation.getTrip();
         trip.setAvailableSpots(trip.getAvailableSpots() + reservation.getNumberOfPeople());
