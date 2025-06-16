@@ -69,7 +69,7 @@ biuropodrozy/
   - Tworzenie rezerwacji
   - Anulowanie rezerwacji
   - Przeglądanie rezerwacji
-  - Generowanie PDF z rezerwacją
+  - Generowanie PDF z detalami rezerwacji
 
 ## Domyślne konto administratora
 
@@ -81,7 +81,7 @@ biuropodrozy/
 - Email: user@example.com
 - Hasło: user1234
 
-## Rozwój
+
 
 ### Backend
 - Pliki konfiguracyjne znajdują się w `backend/src/main/resources/`
@@ -91,13 +91,13 @@ biuropodrozy/
 ### Frontend
 - Widoki FXML: `frontend/src/main/resources/views/`
 - Style CSS: `frontend/src/main/resources/styles/`
-- Główna klasa aplikacji: `FrontendApplication.java`
+- Główna klasa aplikacji: `Main.java`
 
 ## Rozwiązywanie problemów
 
 1. **Problem z portem**
    - Backend domyślnie używa portu 8080
-   - Jeśli port jest zajęty, zmień go w `application.properties`
+   
 
 2. **Błąd budowania Maven**
    - Upewnij się, że masz zainstalowane JDK 17
@@ -107,14 +107,6 @@ biuropodrozy/
    - Sprawdź, czy backend jest uruchomiony
    - Sprawdź adres URL w konfiguracji frontendu
 
-## Współtworzenie
 
-1. Utwórz fork repozytorium
-2. Utwórz nową gałąź (`git checkout -b feature/nazwa-funkcjonalnosci`)
-3. Wprowadź zmiany i zatwierdź je (`git commit -am 'Dodano nową funkcjonalność'`)
-4. Wypchnij zmiany do forka (`git push origin feature/nazwa-funkcjonalnosci`)
-5. Utwórz Pull Request
 
-## Licencja
 
-Ten projekt jest udostępniany na licencji MIT. Szczegóły znajdują się w pliku LICENSE. 
