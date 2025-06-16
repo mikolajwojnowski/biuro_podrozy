@@ -58,6 +58,11 @@ biuropodrozy/
   - Logowanie
   - Rejestracja
   - Role użytkowników (ADMIN/USER)
+  - Uytkownicy, którzy się rejestrują mają defaultowo rolę USER
+
+- **Zarządzanie uytkownikami**
+  - Zmiana hasła
+  - Usunięcie uzytkownika z poziomu admina
 
 - **Zarządzanie wycieczkami**
   - Dodawanie nowych wycieczek
