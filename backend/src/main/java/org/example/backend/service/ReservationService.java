@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.io.ByteArrayOutputStream;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
@@ -31,17 +30,42 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.BaseColor;
 
+/**
+ * Serwis obsługujący logikę biznesową rezerwacji.
+ * Zapewnia metody do tworzenia, anulowania, pobierania i generowania PDF dla rezerwacji.
+ */
 @Service
 public class ReservationService {
 
+    /**
+     * Repozytorium rezerwacji.
+     */
     private final ReservationRepository reservationRepository;
+
+    /**
+     * Repozytorium wycieczek.
+     */
     private final TripRepository tripRepository;
+
+    /**
+     * Repozytorium uczestników rezerwacji.
+     */
     private final ReservationParticipantRepository participantRepository;
+
+    /**
+     * Serwis użytkowników.
+     */
     private final UserService userService;
 
+    /**
+     * Konstruktor wstrzykujący zależności.
+     * @param reservationRepository repozytorium rezerwacji
+     * @param tripRepository repozytorium wycieczek
+     * @param participantRepository repozytorium uczestników rezerwacji
+     * @param userService serwis użytkowników
+     */
     @Autowired
     public ReservationService(ReservationRepository reservationRepository, 
                             TripRepository tripRepository,
@@ -53,6 +77,14 @@ public class ReservationService {
         this.userService = userService;
     }
 
+    /**
+     * Tworzy nową rezerwację na podstawie danych z DTO.
+     * @param reservationDTO dane rezerwacji
+     * @return utworzona rezerwacja
+     * @throws EntityNotFoundException jeśli nie znaleziono wycieczki lub użytkownika
+     * @throws IllegalStateException jeśli brakuje dostępnych miejsc
+     * @throws AccessDeniedException jeśli użytkownik nie jest uwierzytelniony
+     */
     @Transactional
     public Reservation createReservation(ReservationDTO reservationDTO) {
         Trip trip = tripRepository.findById(reservationDTO.getTripId())
@@ -111,6 +143,12 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
+    /**
+     * Anuluje rezerwację o podanym identyfikatorze.
+     * @param id identyfikator rezerwacji
+     * @throws EntityNotFoundException jeśli nie znaleziono rezerwacji
+     * @throws AccessDeniedException jeśli użytkownik nie jest uwierzytelniony
+     */
     @Transactional
     public void cancelReservation(Long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -131,6 +169,12 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
+    /**
+     * Pobiera wszystkie aktywne rezerwacje dla wycieczki.
+     * @param tripId identyfikator wycieczki
+     * @return lista aktywnych rezerwacji dla wycieczki
+     * @throws AccessDeniedException jeśli użytkownik nie jest uwierzytelniony
+     */
     @Transactional(readOnly = true)
     public List<Reservation> getReservationsForTrip(Long tripId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -142,11 +186,23 @@ public class ReservationService {
         return reservationRepository.findByTripIdAndActiveTrue(tripId);
     }
 
+    /**
+     * Pobiera rezerwację o podanym identyfikatorze.
+     * @param id identyfikator rezerwacji
+     * @return rezerwacja
+     * @throws EntityNotFoundException jeśli nie znaleziono rezerwacji
+     */
     public Reservation getReservation(Long id) {
         return reservationRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Reservation not found"));
     }
 
+    /**
+     * Dezaktywuje rezerwację (tylko dla administratorów).
+     * @param reservationId identyfikator rezerwacji
+     * @throws AccessDeniedException jeśli użytkownik nie jest administratorem
+     * @throws IllegalArgumentException jeśli nie znaleziono rezerwacji
+     */
     @Transactional
     public void deactivateReservation(Long reservationId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -166,6 +222,13 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
+    /**
+     * Generuje PDF z danymi rezerwacji.
+     * @param reservationId identyfikator rezerwacji
+     * @return tablica bajtów zawierająca PDF
+     * @throws AccessDeniedException jeśli użytkownik nie jest uwierzytelniony
+     * @throws IllegalArgumentException jeśli nie znaleziono rezerwacji
+     */
     @Transactional(readOnly = true)
     public byte[] generateReservationPdf(Long reservationId) {
         try {

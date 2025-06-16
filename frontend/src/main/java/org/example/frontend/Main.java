@@ -3,13 +3,9 @@ package org.example.frontend;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-import javafx.stage.Screen;
-import javafx.geometry.Rectangle2D;
-import org.example.frontend.utils.ApiClient;
 
-import java.net.URL;
 
-///
+
 public class Main extends Application {
     private Stage primaryStage;
 

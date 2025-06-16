@@ -353,7 +353,7 @@ public class MainScreenController {
 
     @FXML
     private void handleAbout() {
-        DialogUtils.showInfo("About", "Biuro Podróży\nWersja 1\n\nStworzone przez: \n\nMikolaj Wojnowski\nJan Tomasik\nArkadiusz Orzel");
+        DialogUtils.showInfo("About", "Biuro Podróży\nWersja 1\n\nStworzone przez: \n\nMikolaj Wojnowski\nJan Tomasik\nArkadiusz Orzel\nKamil Zajac");
     }
 
     @FXML

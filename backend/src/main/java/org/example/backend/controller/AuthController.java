@@ -3,7 +3,6 @@ package org.example.backend.controller;
 import jakarta.validation.Valid;
 import org.example.backend.DTO.ApiResponse;
 import org.example.backend.DTO.ErrorResponse;
-import org.example.backend.DTO.LoginRequest;
 import org.example.backend.DTO.LoginResponse;
 import org.example.backend.DTO.ChangePasswordRequest;
 import org.example.backend.service.UserService;
@@ -18,17 +17,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Kontroler obsługujący operacje związane z autoryzacją i uwierzytelnianiem użytkowników.
+ * Zapewnia endpointy do logowania, rejestracji i odświeżania tokenów.
+ */
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
     private final UserService userService;
     private final JwtUtil jwtUtil;
 
+    /**
+     * Konstruktor wstrzykujący zależności.
+     * @param userService serwis użytkowników
+     * @param jwtUtil narzędzie do obsługi tokenów JWT
+     */
     public AuthController(UserService userService, JwtUtil jwtUtil) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
     }
 
+    /**
+     * Endpoint do rejestracji nowego użytkownika.
+     * @param registrationData dane rejestracji (email, hasło i powtórzone hasło)
+     * @return odpowiedź informująca o statusie rejestracji
+     */
     @PostMapping("/register")
     public ResponseEntity<ApiResponse> register(@Valid @RequestBody Map<String, String> registrationData) {
         try {
@@ -69,6 +82,11 @@ public class AuthController {
         }
     }
 
+    /**
+     * Endpoint do logowania użytkownika.
+     * @param credentials dane logowania (email i hasło)
+     * @return odpowiedź zawierająca tokeny dostępu i odświeżania oraz dane użytkownika
+     */
     @PostMapping("/login")
     public ResponseEntity<ApiResponse> login(@Valid @RequestBody Map<String, String> credentials) {
         try {
@@ -103,6 +121,11 @@ public class AuthController {
         }
     }
 
+    /**
+     * Endpoint do odświeżania tokenu dostępu.
+     * @param refreshToken token odświeżania
+     * @return odpowiedź zawierająca nowy token dostępu
+     */
     @PostMapping("/refresh")
     public ResponseEntity<?> refreshToken(@RequestHeader("Authorization") String refreshToken) {
         try {

@@ -13,18 +13,37 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
+/**
+ * Filtr do obsługi autentykacji JWT.
+ * Sprawdza token JWT w nagłówku żądania i ustawia kontekst bezpieczeństwa.
+ */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    /**
+     * Narzędzie do obsługi tokenów JWT.
+     */
     private final JwtUtil jwtUtil;
 
+    /**
+     * Konstruktor wstrzykujący zależności.
+     * @param jwtUtil narzędzie do obsługi tokenów JWT
+     */
     public JwtAuthenticationFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
     }
 
+    /**
+     * Metoda filtrująca żądania HTTP.
+     * Sprawdza token JWT w nagłówku i ustawia kontekst bezpieczeństwa.
+     * @param request żądanie HTTP
+     * @param response odpowiedź HTTP
+     * @param filterChain łańcuch filtrów
+     * @throws ServletException w przypadku błędu serwletu
+     * @throws IOException w przypadku błędu wejścia/wyjścia
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -63,6 +82,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * Wyodrębnia token JWT z nagłówka żądania.
+     * @param request żądanie HTTP
+     * @return token JWT lub null, jeśli nie znaleziono
+     */
     private String getJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {

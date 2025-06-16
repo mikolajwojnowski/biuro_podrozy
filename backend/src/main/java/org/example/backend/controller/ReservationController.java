@@ -10,52 +10,73 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/// RESERVATION CONTROLLER
-/// /api/reservations
-
+/**
+ * Kontroler obsługujący operacje związane z rezerwacjami.
+ * Zapewnia endpointy do tworzenia, pobierania, aktualizacji i usuwania rezerwacji.
+ */
 @RestController
 @RequestMapping("/api/reservations")
 public class ReservationController {
 
-    ///reservation service object
+    /**
+     * Serwis obsługujący logikę biznesową rezerwacji.
+     */
     private final ReservationService reservationService;
 
-
-    ///constructor
+    /**
+     * Konstruktor wstrzykujący zależności.
+     * @param reservationService serwis rezerwacji
+     */
     @Autowired
     public ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
 
-    /// POST /api/reservations  - creates a new reservation for a trip (requires authentication - jwt token)
+    /**
+     * Endpoint do tworzenia nowej rezerwacji.
+     * @param reservationDTO dane rezerwacji
+     * @return odpowiedź zawierająca utworzoną rezerwację
+     */
     @PostMapping
     public ResponseEntity<Reservation> createReservation(@Valid @RequestBody ReservationDTO reservationDTO) {
         return ResponseEntity.ok(reservationService.createReservation(reservationDTO));
     }
 
-
-    /// GET /api/reservations/trip/{tripId}  - list all reservations for a trip (requires authentication - jwt token)
+    /**
+     * Endpoint do pobierania wszystkich rezerwacji.
+     * @return lista wszystkich rezerwacji
+     */
     @GetMapping("/trip/{tripId}")
     public ResponseEntity<List<Reservation>> getReservationsForTrip(@PathVariable Long tripId) {
         return ResponseEntity.ok(reservationService.getReservationsForTrip(tripId));
     }
 
-    /// GET /api/reservations/{id}  - gets a specific reservation (requires authentication - jwt token)
+    /**
+     * Endpoint do pobierania rezerwacji po identyfikatorze.
+     * @param id identyfikator rezerwacji
+     * @return rezerwacja o podanym identyfikatorze
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Reservation> getReservation(@PathVariable Long id) {
         return ResponseEntity.ok(reservationService.getReservation(id));
     }
 
-    /// DELETE /api/reservations/{id}  - soft delete, cancels reservation by changing isActive value (requires authentication - jwt token)
-    /// Users can only cancel their own reservations, admins can cancel any reservation
+    /**
+     * Endpoint do usuwania rezerwacji.
+     * @param id identyfikator rezerwacji
+     * @return odpowiedź informująca o statusie usunięcia
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> cancelReservation(@PathVariable Long id) {
         reservationService.cancelReservation(id);
         return ResponseEntity.ok().build();
     }
 
-    /// GET /api/reservations/{id}/pdf  - generates a PDF for a reservation (requires authentication - jwt token)
-    /// Users can only generate PDFs for their own reservations, admins can generate PDFs for any reservation
+    /**
+     * Endpoint do generowania PDF dla rezerwacji.
+     * @param id identyfikator rezerwacji
+     * @return PDF rezerwacji
+     */
     @GetMapping("/{id}/pdf")
     public ResponseEntity<byte[]> generateReservationPdf(@PathVariable Long id) {
         byte[] pdfContent = reservationService.generateReservationPdf(id);

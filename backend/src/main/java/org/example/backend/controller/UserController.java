@@ -3,7 +3,6 @@ package org.example.backend.controller;
 import org.example.backend.DTO.UserResponseDTO;
 import org.example.backend.service.UserService;
 import org.example.backend.models.User;
-import org.hibernate.query.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -14,7 +14,7 @@ module org.example.frontend {
     opens org.example.frontend to javafx.fxml;
     opens org.example.frontend.controllers to javafx.fxml;
     opens org.example.frontend.models to com.fasterxml.jackson.databind;
-    opens views to javafx.fxml;
+    
 
     exports org.example.frontend;
     exports org.example.frontend.controllers;
