@@ -90,7 +90,78 @@ biuropodrozy/
 Aplikacja ma klasę DataInitializer, która przy uruchomienu tworzy powyzszych uzytkowników
 oraz dodaje 2 wycieczki do tabeli wycieczek. 
 
+## Schemat bazy danych
 
+Poniżej przedstawiono schemat bazy danych w formie diagramu ER:
+
+```mermaid
+erDiagram
+    User {
+        Long id PK
+        String email UK
+        String password
+        Boolean role
+        Boolean is_active
+    }
+
+    Trip {
+        Long id PK
+        String title UK
+        String description
+        Date trip_date
+        Integer capacity
+        Integer available_spots
+        Boolean is_active
+        Integer days
+        Double price
+    }
+
+    Reservation {
+        Long id PK
+        Long user_id FK
+        Long trip_id FK
+        String name
+        String surname
+        String email
+        String phone_number
+        Integer number_of_people
+        Decimal total_price
+        Boolean active
+    }
+
+    ReservationParticipant {
+        Long id PK
+        Long reservation_id FK
+        String name
+        String surname
+    }
+
+    User ||--o{ Reservation : "makes"
+    Trip ||--o{ Reservation : "has"
+    Reservation ||--o{ ReservationParticipant : "includes"
+```
+
+### Opis encji
+
+1. **User (Użytkownik)**
+   - Przechowuje informacje o użytkownikach systemu
+   - Zawiera dane uwierzytelniające i uprawnienia
+   - Może mieć wiele rezerwacji
+
+2. **Trip (Wycieczka)**
+   - Przechowuje informacje o dostępnych wycieczkach
+   - Zawiera szczegóły takie jak data, pojemność i cena
+   - Może mieć wiele rezerwacji
+
+3. **Reservation (Rezerwacja)**
+   - Łączy użytkownika z wycieczką
+   - Przechowuje dane kontaktowe osoby rezerwującej
+   - Zawiera informacje o liczbie osób i cenie
+   - Może mieć wielu uczestników
+
+4. **ReservationParticipant (Uczestnik)**
+   - Przechowuje dane uczestników wycieczki
+   - Jest powiązany z konkretną rezerwacją
 
 ### Backend
 - Pliki konfiguracyjne znajdują się w `backend/src/main/resources/`
