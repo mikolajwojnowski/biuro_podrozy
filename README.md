@@ -14,7 +14,7 @@ System do zarządzania biurem podróży z interfejsem JavaFX i backendem Spring 
 1. Sklonuj repozytorium:
 ```bash
 git clone https://github.com/mikolajwojnowski/biuro_podrozy.git
-cd biuropodrozy
+cd biuro_podrozy
 ```
 
 2. Skonfiguruj backend:
