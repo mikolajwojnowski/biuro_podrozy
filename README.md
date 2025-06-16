@@ -76,6 +76,11 @@ biuropodrozy/
 - Email: admin@example.com
 - Hasło: admin123
 
+## Domyślne konto uzytkownika
+
+- Email: user@example.com
+- Hasło: user1234
+
 ## Rozwój
 
 ### Backend
