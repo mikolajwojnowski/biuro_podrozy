@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.frontend.controllers.TripDialogController"
+      spacing="10"
+      styleClass="dialog-content"
+      stylesheets="@../styles/main.css">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Text fx:id="dialogTitle" styleClass="header-text" text="Add New Trip"/>
+
+    <GridPane vgap="10" hgap="10">
+        <TextField fx:id="titleField" 
+                  promptText="Title"
+                  GridPane.columnIndex="0" 
+                  GridPane.rowIndex="0"
+                  GridPane.columnSpan="2"/>
+
+        <TextArea fx:id="descriptionField" 
+                 promptText="Description"
+                 GridPane.columnIndex="0" 
+                 GridPane.rowIndex="1"
+                 GridPane.columnSpan="2"/>
+
+        <DatePicker fx:id="tripDatePicker" 
+                   promptText="Trip Date"
+                   GridPane.columnIndex="0" 
+                   GridPane.rowIndex="2"/>
+
+        <TextField fx:id="daysField" 
+                  promptText="Number of Days"
+                  GridPane.columnIndex="1" 
+                  GridPane.rowIndex="2"/>
+
+        <TextField fx:id="capacityField" 
+                  promptText="Capacity"
+                  GridPane.columnIndex="0" 
+                  GridPane.rowIndex="3"/>
+
+        <TextField fx:id="priceField" 
+                  promptText="Price"
+                  GridPane.columnIndex="1" 
+                  GridPane.rowIndex="3"/>
+
+        <CheckBox fx:id="isActiveCheckBox" 
+                 text="Active"
+                 selected="true"
+                 GridPane.columnIndex="0" 
+                 GridPane.rowIndex="4"/>
+    </GridPane>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Cancel" 
+                onAction="#handleCancel"
+                styleClass="secondary-button"/>
+        <Button text="Save" 
+                onAction="#handleSave"
+                styleClass="primary-button"/>
+    </HBox>
+
+    <Label fx:id="errorLabel" 
+           styleClass="error-label" 
+           wrapText="true"
+           visible="false"/>
+</VBox> 

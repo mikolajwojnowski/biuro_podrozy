@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.frontend.controllers.MainScreenController"
+            styleClass="main-container"
+            stylesheets="@../styles/mainScreen.css">
+
+    <!-- Top Menu Bar -->
+    <top>
+        <VBox>
+            <MenuBar styleClass="nav-bar">
+                <Menu text="File">
+                    <MenuItem text="Logout" fx:id="logoutMenuItem" onAction="#handleLogout"/>
+                </Menu>
+                <Menu fx:id="tripsMenu" text="Trips">
+                    <MenuItem fx:id="addTripMenuItem" text="Add Trip" onAction="#handleAddTrip"/>
+                    <MenuItem text="Refresh" onAction="#handleRefreshTrips"/>
+                </Menu>
+                <Menu fx:id="adminMenu" text="Admin">
+                    <MenuItem fx:id="manageUsersMenuItem" text="Manage Users" onAction="#handleManageUsers"/>
+                </Menu>
+                <Menu text="Help">
+                    <MenuItem text="About" fx:id="aboutMenuItem" onAction="#handleAbout"/>
+                </Menu>
+                <Menu text="Account">
+                    <MenuItem text="Change Password" fx:id="changePasswordMenuItem" onAction="#handleChangePassword"/>
+                </Menu>
+            </MenuBar>
+            
+            <!-- User Info Bar -->
+            <HBox styleClass="user-info" alignment="CENTER_RIGHT" spacing="10">
+                <Label fx:id="userInfoLabel" styleClass="info-label"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Center Content -->
+    <center>
+        <VBox styleClass="content-area">
+            <!-- Header Section -->
+            <HBox styleClass="table-header" alignment="CENTER_LEFT" spacing="10">
+                <Label text="Available Trips" styleClass="section-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="addTripButton" 
+                        text="Add New Trip" 
+                        onAction="#handleAddTrip"
+                        styleClass="action-button, primary-button"
+                        visible="false"/>
+                <Button text="Refresh" 
+                        onAction="#handleRefreshTrips"
+                        styleClass="action-button, refresh-button"/>
+            </HBox>
+
+            <!-- Table Section -->
+            <TableView fx:id="tripsTable" VBox.vgrow="ALWAYS" styleClass="trips-table">
+                <columns>
+                    <TableColumn fx:id="titleColumn" text="Title" prefWidth="200"/>
+                    <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="300"/>
+                    <TableColumn fx:id="dateColumn" text="Date" prefWidth="120"/>
+                    <TableColumn fx:id="daysColumn" text="Days" prefWidth="80"/>
+                    <TableColumn fx:id="priceColumn" text="Price" prefWidth="100"/>
+                    <TableColumn fx:id="availableSpotsColumn" text="Available Spots" prefWidth="120"/>
+                    <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="200"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+    <!-- Bottom Status Bar -->
+    <bottom>
+        <HBox styleClass="status-bar">
+            <Label fx:id="statusLabel" styleClass="info-label"/>
+        </HBox>
+    </bottom>
+</BorderPane>

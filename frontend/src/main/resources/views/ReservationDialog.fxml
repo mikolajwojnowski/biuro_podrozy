@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.frontend.controllers.ReservationDialogController"
+      spacing="10"
+      styleClass="dialog-content"
+      stylesheets="@../styles/main.css">
+
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <Text styleClass="header-text" text="Make Reservation"/>
+
+    <Label text="Contact Person Information" style="-fx-font-weight: bold"/>
+    
+    <GridPane hgap="10" vgap="5">
+        <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        
+        <Label text="Surname:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField fx:id="surnameField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        
+        <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        
+        <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+        <TextField fx:id="phoneField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    </GridPane>
+
+    <Separator/>
+    
+    <Label text="Participants" style="-fx-font-weight: bold"/>
+    
+    <GridPane hgap="10" vgap="5">
+        <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="participantNameField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        
+        <Label text="Surname:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+        <TextField fx:id="participantSurnameField" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+        
+        <Button fx:id="addParticipantButton" text="Add Participant" 
+                onAction="#handleAddParticipant"
+                GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+    </GridPane>
+    
+    <TableView fx:id="participantsTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="participantNameColumn" text="Name" prefWidth="150"/>
+            <TableColumn fx:id="participantSurnameColumn" text="Surname" prefWidth="150"/>
+        </columns>
+    </TableView>
+    
+    <Button fx:id="removeParticipantButton" text="Remove Selected Participant" 
+            onAction="#handleRemoveParticipant"/>
+
+    <Label text="* Required fields" styleClass="hint-text"/>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Cancel" 
+                onAction="#handleCancel"
+                styleClass="secondary-button"/>
+        <Button text="Reserve" 
+                onAction="#handleReserve"
+                styleClass="primary-button"/>
+    </HBox>
+
+    <Label fx:id="errorLabel" 
+           styleClass="error-label" 
+           wrapText="true"
+           visible="false"/>
+</VBox> 

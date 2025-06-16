@@ -1,38 +1,40 @@
 package org.example.backend.DTO;
 
+import java.util.Map;
+
 public class LoginResponse implements ApiResponse {
-    private String token;
+    private String accessToken;
+    private String refreshToken;
     private String email;
-    private boolean role;
+    private String role;
+    private Long userId;
 
-    public LoginResponse(String token, String email, boolean role) {
-        this.token = token;
-        this.email = email;
-        this.role = role;
+    public LoginResponse(Map<String, Object> data) {
+        this.accessToken = (String) data.get("accessToken");
+        this.refreshToken = (String) data.get("refreshToken");
+        this.email = (String) data.get("email");
+        this.role = (String) data.get("role");
+        this.userId = (Long) data.get("userId");
     }
 
-    // Getters and Setters
-    public String getToken() {
-        return token;
+    // Getters
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public boolean isRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(boolean role) {
-        this.role = role;
+    public Long getUserId() {
+        return userId;
     }
 } 

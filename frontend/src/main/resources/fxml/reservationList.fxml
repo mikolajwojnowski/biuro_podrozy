@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10" xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.frontend.controllers.ReservationListController">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <Label fx:id="tripDetailsLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+    
+    <TableView fx:id="reservationsTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="nameColumn" text="Name"/>
+            <TableColumn fx:id="surnameColumn" text="Surname"/>
+            <TableColumn fx:id="emailColumn" text="Email"/>
+            <TableColumn fx:id="phoneColumn" text="Phone"/>
+            <TableColumn fx:id="participantsColumn" text="Participants"/>
+            <TableColumn fx:id="totalPriceColumn" text="Total Price"/>
+            <TableColumn fx:id="actionsColumn" text="Actions"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button fx:id="closeButton" text="Close" onAction="#handleClose"/>
+    </HBox>
+
+    <Label fx:id="statusLabel" style="-fx-text-fill: red;"/>
+</VBox> 

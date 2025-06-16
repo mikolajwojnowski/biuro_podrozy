@@ -25,7 +25,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.jwtUtil = jwtUtil;
     }
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -34,15 +33,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (StringUtils.hasText(jwt)) {
                 String userEmail = jwtUtil.extractEmail(jwt);
-                String role = jwtUtil.extractRole(jwt); // Extract role from token
+                String role = jwtUtil.extractRole(jwt);
 
-                if (!List.of("ADMIN", "USER").contains(role)) {
-                    throw new ServletException("Invalid role in token");
-                }
+                System.out.println("JWT Filter - Extracted role: " + role);
 
                 if (StringUtils.hasText(userEmail) && SecurityContextHolder.getContext().getAuthentication() == null) {
                     if (jwtUtil.validateToken(jwt, userEmail)) {
-                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userEmail, null, Collections.singletonList(new SimpleGrantedAuthority(role)));
+                        // Ensure role is uppercase
+                        String upperRole = role.toUpperCase();
+                        // Create authorities list with both ROLE_ prefix and without for compatibility
+                        List<SimpleGrantedAuthority> authorities = List.of(
+                            new SimpleGrantedAuthority(upperRole),
+                            new SimpleGrantedAuthority("ROLE_" + upperRole)
+                        );
+                        
+                        System.out.println("JWT Filter - Created authorities: " + authorities);
+                        
+                        UsernamePasswordAuthenticationToken authentication = 
+                            new UsernamePasswordAuthenticationToken(userEmail, null, authorities);
                         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                         SecurityContextHolder.getContext().setAuthentication(authentication);
                     }

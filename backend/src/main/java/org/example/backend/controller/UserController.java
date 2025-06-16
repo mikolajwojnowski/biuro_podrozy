@@ -16,10 +16,10 @@ import java.util.Map;
 
 
 /// USER CONTROLLER
-/// /users
+/// /api/users
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     ///success message
@@ -36,7 +36,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    /// POST /users  - creates a new user account (Public - no authentication needed)
+    /// POST /api/users  - creates a new user account (Public - no authentication needed)
     @PostMapping
     public ResponseEntity<?> addNewUser(@Valid @RequestBody User user) {
         try {
@@ -58,7 +58,7 @@ public class UserController {
         }
     }
 
-    /// GET users/email/{email}  - gets user details by email (requires authentication - jwt token)
+    /// GET api/users/email/{email}  - gets user details by email (requires authentication - jwt token)
     @GetMapping("/email/{email}")
     public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
         try {
@@ -71,26 +71,25 @@ public class UserController {
         }
     }
 
-//    ///admin privileges
-//    ///  GET user/admin/users  - list all users from admin level
-//    @GetMapping("/admin/users")
-//    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
-//        List<User> users = userService.getAllUsers();
-//        List<UserResponseDTO> response = users.stream()
-//                .map(user -> new UserResponseDTO(
-//                        user.getId(),
-//                        user.getEmail(),
-//                        user.isRole() ? "ADMIN" : "USER"
-//                ))
-//                .toList();
-//        return ResponseEntity.ok(response);
-//    }
+    @GetMapping
+    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
+        List<UserResponseDTO> users = userService.getAllActiveUsers();
+        return ResponseEntity.ok(users);
+    }
 
-
-
-
-
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deactivateUser(@PathVariable Long id) {
+        try {
+            userService.deactivateUser(id);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        } catch (Exception e) {
+            return handleException(e);
+        }
+    }
 
     private ResponseEntity<?> handleException(Exception e) {
         Map<String, String> errorResponse = new HashMap<>();

@@ -1,12 +1,9 @@
 package org.example.backend.models;
 
-
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 
 import java.time.LocalDate;
 
@@ -17,30 +14,27 @@ public class Trip {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(nullable = false, unique = true, length = 100)
     private String title;
-
 
     @Column(nullable = true, length = 500)
     private String description;
 
-    @JsonProperty("trip_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(nullable = false)
+    @Column(name = "trip_date", nullable = false)
     private LocalDate tripDate;
-
 
     @NotNull(message = "Capacity is required")
     @Min(value = 1, message = "Capacity must be at least 1")
     @Column(nullable = false)
     private int capacity;
 
-    @Column(nullable = false)
+    @Column(name = "available_spots", nullable = false)
     private int availableSpots;
 
-    @Column(name="isActive", nullable = false)
-    private boolean isActive;
+    @Basic
+    @Column(name = "isActive", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
+    private boolean isActive = true;
 
     @Column(nullable = true)
     private int days;
@@ -50,6 +44,7 @@ public class Trip {
 
     public Trip() {
     }
+
     public Trip(String title, String description, LocalDate tripDate, int capacity, boolean isActive, int days, double price) {
         this.title = title;
         this.description = description;
@@ -59,7 +54,6 @@ public class Trip {
         this.days = days;
         this.price = price;
     }
-
 
     public Long getId() {
         return id;
@@ -105,8 +99,8 @@ public class Trip {
         this.description = description;
     }
 
-    public void setTripDate(LocalDate trip_date) {
-        this.tripDate = trip_date;
+    public void setTripDate(LocalDate tripDate) {
+        this.tripDate = tripDate;
     }
 
     public void setCapacity(int capacity) {

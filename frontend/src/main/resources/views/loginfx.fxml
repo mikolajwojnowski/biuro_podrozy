@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.frontend.controllers.LoginController">
+   <left>
+      <AnchorPane prefHeight="397.0" prefWidth="324.0" BorderPane.alignment="CENTER">
+         <children>
+         
+             <ImageView fitHeight="445.0" fitWidth="422.0" layoutX="-15.0" layoutY="-9.0" preserveRatio="true">
+                 <Image url="@agency.jpg" />
+             </ImageView>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <GridPane prefHeight="415.0" prefWidth="398.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.94873046875" minWidth="10.0" prefWidth="58.6455078125" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="356.3330078125" minWidth="10.0" prefWidth="295.5" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="356.3330078125" minWidth="10.0" prefWidth="47.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="212.264892578125" minHeight="10.0" prefHeight="159.4658203125" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="133.19212341308594" minHeight="10.0" prefHeight="33.5341796875" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="196.49560546875" minHeight="10.0" prefHeight="38.09410095214844" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="196.49560546875" minHeight="10.0" prefHeight="42.156829833984375" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="196.49560546875" minHeight="10.0" prefHeight="34.2091064453125" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="196.49560546875" minHeight="10.0" prefHeight="44.250946044921875" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="196.49560546875" minHeight="10.0" prefHeight="67.74905395507812" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <PasswordField fx:id="passwordField" prefHeight="0.0" prefWidth="296.0" promptText="password" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="emailField" prefHeight="27.0" prefWidth="243.0" promptText="email" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLogin" prefHeight="26.0" prefWidth="298.0" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account yet?" textAlignment="CENTER" wrappingWidth="294.86859130859375" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Button fx:id="registerButton" mnemonicParsing="false" onAction="#handleRegister" prefHeight="4.0" prefWidth="295.0" text="Register" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Login" textAlignment="CENTER" wrappingWidth="294.61859130859375" GridPane.columnIndex="1">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Label fx:id="errorLabel" text="Error: " textFill="RED" visible="false" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+         </children>
+      </GridPane>
+   </right>
+</BorderPane>
