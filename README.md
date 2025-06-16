@@ -86,6 +86,10 @@ biuropodrozy/
 - Email: user@example.com
 - Hasło: user1234
 
+## Inicjalizacja danych
+Aplikacja ma klasę DataInitializer, która przy uruchomienu tworzy powyzszych uzytkowników
+oraz dodaje 2 wycieczki do tabeli wycieczek. 
+
 
 
 ### Backend
